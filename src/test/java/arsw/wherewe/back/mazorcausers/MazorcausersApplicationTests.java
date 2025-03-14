@@ -7,8 +7,10 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 @SpringBootTest
 class MazorcausersApplicationTests {
 
+
 	@Test
 	void contextLoads() {
+		// this method is empty because it is not necessary
 	}
 
 	@Test
