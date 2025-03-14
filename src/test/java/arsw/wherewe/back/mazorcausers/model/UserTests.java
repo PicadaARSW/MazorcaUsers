@@ -3,7 +3,7 @@ package arsw.wherewe.back.mazorcausers.model;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
-public class UserTests {
+class UserTests {
 
     @Test
     void userConstructorAndGetters() {

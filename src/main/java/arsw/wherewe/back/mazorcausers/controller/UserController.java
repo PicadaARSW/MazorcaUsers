@@ -20,7 +20,7 @@ public class UserController {
 
     /**
      * Constructor for UserController injecting UserService
-     * @param userService
+     * @param userService UserService
      */
     @Autowired
     public UserController(UserService userService) {
@@ -29,7 +29,7 @@ public class UserController {
 
     /**
      * Create a new user
-     * @param user
+     * @param user User
      * @return ResponseEntity<User>
      */
     @PostMapping("")

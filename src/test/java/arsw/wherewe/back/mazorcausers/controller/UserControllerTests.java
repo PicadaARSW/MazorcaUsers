@@ -14,7 +14,7 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
-public class UserControllerTests {
+class UserControllerTests {
 
     @Mock
     private UserService userService;
@@ -33,7 +33,7 @@ public class UserControllerTests {
 
         ResponseEntity<User> response = userController.createUser(user);
 
-        assertEquals(200, response.getStatusCodeValue());
+        assertEquals(200, response.getStatusCode().value());
         assertEquals(user, response.getBody());
     }
 
@@ -44,7 +44,7 @@ public class UserControllerTests {
 
         ResponseEntity<User> response = userController.createUser(user);
 
-        assertEquals(400, response.getStatusCodeValue());
+        assertEquals(400, response.getStatusCode().value());
         assertNull(response.getBody());
     }
 
@@ -57,7 +57,7 @@ public class UserControllerTests {
 
         ResponseEntity<List<User>> response = userController.getAllUsers();
 
-        assertEquals(200, response.getStatusCodeValue());
+        assertEquals(200, response.getStatusCode().value());
         assertEquals(users, response.getBody());
     }
 
@@ -67,7 +67,7 @@ public class UserControllerTests {
 
         ResponseEntity<List<User>> response = userController.getAllUsers();
 
-        assertEquals(204, response.getStatusCodeValue());
+        assertEquals(204, response.getStatusCode().value());
         assertNull(response.getBody());
     }
 }
