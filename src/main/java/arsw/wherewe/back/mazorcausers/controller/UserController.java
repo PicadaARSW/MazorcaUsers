@@ -8,6 +8,9 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+/**
+ * User controller class for user operations
+ */
 @RestController
 @RequestMapping("/api/v1/users")
 public class UserController {
@@ -15,11 +18,20 @@ public class UserController {
 
     private UserService userService;
 
+    /**
+     * Constructor for UserController injecting UserService
+     * @param userService
+     */
     @Autowired
     public UserController(UserService userService) {
         this.userService = userService;
     }
 
+    /**
+     * Create a new user
+     * @param user
+     * @return ResponseEntity<User>
+     */
     @PostMapping("")
     public ResponseEntity<User> createUser(@RequestBody User user) {
 
@@ -30,6 +42,10 @@ public class UserController {
         return ResponseEntity.ok(newUser);
     }
 
+    /**
+     * Get all users
+     * @return ResponseEntity<List<User>>
+     */
     @GetMapping("")
     public ResponseEntity<List<User>> getAllUsers() {
         List<User> users = userService.getAllUsers();

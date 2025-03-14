@@ -8,13 +8,20 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Optional;
 
+/**
+ * User service class for user operations
+ */
 @Service
 public class UserService {
 
     @Autowired
     private UserRepository userRepository;
 
-
+    /**
+     * Create a new user if it does not exist
+     * @param user
+     * @return User
+     */
     public User createUserIfNotExists(User user) {
         // Verifica si el usuario ya existe
         Optional<User> existingUser = userRepository.findByUserEmail(user.getUserEmail());
@@ -26,6 +33,10 @@ public class UserService {
         return userRepository.save(user);
     }
 
+    /**
+     * Get all users
+     * @return List<User>
+     */
     public List<User> getAllUsers() {
         return userRepository.findAll();
     }
