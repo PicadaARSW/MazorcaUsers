@@ -12,6 +12,7 @@ import java.util.List;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
@@ -64,5 +65,25 @@ class UserServiceTest {
         List<User> result = userService.getAllUsers();
 
         assertEquals(users, result);
+    }
+
+    @Test
+    void getUserById_userExists() {
+        User user = new User();
+        user.setId("1");
+        when(userRepository.findById("1")).thenReturn(Optional.of(user));
+
+        User result = userService.getUserById("1");
+
+        assertEquals(user, result);
+    }
+
+    @Test
+    void getUserById_userDoesNotExist() {
+        when(userRepository.findById("1")).thenReturn(Optional.empty());
+
+        User result = userService.getUserById("1");
+
+        assertNull(result);
     }
 }
