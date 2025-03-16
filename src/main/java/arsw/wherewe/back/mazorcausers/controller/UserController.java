@@ -54,4 +54,18 @@ public class UserController {
         }
         return ResponseEntity.ok(users);
     }
+
+    /**
+     * Get User by Id
+     * @param id String
+     * @return ResponseEntity<User>
+     */
+    @GetMapping("/{id}")
+    public ResponseEntity<User> getUserById(@PathVariable("id") String id) {
+        User user = userService.getUserById(id);
+        if(user == null){
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.ok(user);
+    }
 }

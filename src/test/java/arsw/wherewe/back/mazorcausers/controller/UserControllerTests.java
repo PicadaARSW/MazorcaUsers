@@ -70,4 +70,25 @@ class UserControllerTests {
         assertEquals(204, response.getStatusCode().value());
         assertNull(response.getBody());
     }
+
+    @Test
+    void getUserByIdSuccessfully() {
+        User user = new User("1", "John", "John Doe", "john.doe@example.com", "UTC");
+        when(userService.getUserById("1")).thenReturn(user);
+
+        ResponseEntity<User> response = userController.getUserById("1");
+
+        assertEquals(200, response.getStatusCode().value());
+        assertEquals(user, response.getBody());
+    }
+
+    @Test
+    void getUserByIdNotFound() {
+        when(userService.getUserById("1")).thenReturn(null);
+
+        ResponseEntity<User> response = userController.getUserById("1");
+
+        assertEquals(404, response.getStatusCode().value());
+        assertNull(response.getBody());
+    }
 }

@@ -45,4 +45,13 @@ public class UserService {
     public List<User> getAllUsers() {
         return userRepository.findAll();
     }
+
+    /**
+     * Get User by Id
+     * @param id String
+     * @return User or null
+     */
+    public User getUserById(String id) {
+        return userRepository.findById(id).orElse(null);
+    }
 }
