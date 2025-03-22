@@ -12,7 +12,7 @@ WORKDIR /mazorcaUsers
 COPY target/mazorcausers-0.0.1-SNAPSHOT.jar app.jar
 
 # Exponemos el puerto en el que corre la aplicación
-EXPOSE 8080
+EXPOSE 8084
 
 # Definimos el comando de entrada para ejecutar la aplicación
 CMD ["java", "-jar", "app.jar"]
