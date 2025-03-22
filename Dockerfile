@@ -1,6 +1,6 @@
 FROM eclipse-temurin:21-jre
 
-# Configuramos la zona horaria a Bogotá
+# Configuramos la zona horaria a Bogota
 ENV TZ=America/Bogota
 RUN apt-get update && apt-get install -y tzdata && rm -rf /var/lib/apt/lists/*
 RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
@@ -11,8 +11,8 @@ WORKDIR /mazorcaUsers
 # Copiamos el archivo JAR generado en la carpeta target
 COPY target/mazorcausers-0.0.1-SNAPSHOT.jar app.jar
 
-# Exponemos el puerto en el que corre la aplicación
+# Exponemos el puerto en el que corre la aplicacion
 EXPOSE 8084
 
-# Definimos el comando de entrada para ejecutar la aplicación
+# Definimos el comando de entrada para ejecutar la aplicacion
 CMD ["java", "-jar", "app.jar"]
