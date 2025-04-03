@@ -1,5 +1,6 @@
 package arsw.wherewe.back.mazorcausers.model;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -8,12 +9,18 @@ import org.springframework.data.mongodb.core.mapping.Document;
  * @version 1.0
  */
 @Document(collection = "users")
+@Schema(name = "User", description = "User Entity Representing a System User")
 public class User {
     @Id
+    @Schema(description = "Unique identifier of the user", example = "507f1f77bcf86cd799439011")
     private String id;
+    @Schema(description = "User's first name", example = "John")
     private String userFirstName;
+    @Schema(description = "User's full name", example = "John Doe")
     private String userFullName;
+    @Schema(description = "User's email address", example = "john.doe@example.com")
     private String userEmail;
+    @Schema(description = "User's time zone", example = "America/New_York")
     private String userTimeZone;
 
     /**
