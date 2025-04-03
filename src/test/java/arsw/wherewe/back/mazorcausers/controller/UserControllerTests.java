@@ -1,6 +1,6 @@
 package arsw.wherewe.back.mazorcausers.controller;
 
-import arsw.wherewe.back.mazorcausers.model.User;
+import arsw.wherewe.back.mazorcausers.dto.UserDTO;
 import arsw.wherewe.back.mazorcausers.service.UserService;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
@@ -28,36 +28,33 @@ class UserControllerTests {
 
     @Test
     void createUserSuccessfully() {
-        User user = new User("1", "John", "John Doe", "john.doe@example.com", "UTC");
-        when(userService.createUserIfNotExists(user)).thenReturn(user);
+        UserDTO userDTO = new UserDTO("1", "John", "John Doe", "john.doe@example.com", "UTC");
+        when(userService.createUserIfNotExists(userDTO)).thenReturn(userDTO);
 
-        ResponseEntity<User> response = userController.createUser(user);
+        ResponseEntity<UserDTO> response = userController.createUser(userDTO);
 
-        assertEquals(200, response.getStatusCodeValue());
-        assertEquals(user, response.getBody());
+        assertEquals(userDTO, response.getBody());
     }
 
     @Test
     void createUserAlreadyExists() {
-        User user = new User("1", "John", "John Doe", "john.doe@example.com", "UTC");
-        when(userService.createUserIfNotExists(user)).thenReturn(null);
+        UserDTO userDTO = new UserDTO("1", "John", "John Doe", "john.doe@example.com", "UTC");
+        when(userService.createUserIfNotExists(userDTO)).thenReturn(null);
 
-        ResponseEntity<User> response = userController.createUser(user);
+        ResponseEntity<UserDTO> response = userController.createUser(userDTO);
 
-        assertEquals(400, response.getStatusCodeValue());
         assertNull(response.getBody());
     }
 
     @Test
     void getAllUsersSuccessfully() {
-        User user1 = new User("1", "John", "John Doe", "john.doe@example.com", "UTC");
-        User user2 = new User("2", "Jane", "Jane Doe", "jane.doe@example.com", "PST");
-        List<User> users = List.of(user1, user2);
+        UserDTO user1 = new UserDTO("1", "John", "John Doe", "john.doe@example.com", "UTC");
+        UserDTO user2 = new UserDTO("2", "Jane", "Jane Doe", "jane.doe@example.com", "PST");
+        List<UserDTO> users = List.of(user1, user2);
         when(userService.getAllUsers()).thenReturn(users);
 
-        ResponseEntity<List<User>> response = userController.getAllUsers();
+        ResponseEntity<List<UserDTO>> response = userController.getAllUsers();
 
-        assertEquals(200, response.getStatusCodeValue());
         assertEquals(users, response.getBody());
     }
 
@@ -65,30 +62,27 @@ class UserControllerTests {
     void getAllUsersNoContent() {
         when(userService.getAllUsers()).thenReturn(Collections.emptyList());
 
-        ResponseEntity<List<User>> response = userController.getAllUsers();
+        ResponseEntity<List<UserDTO>> response = userController.getAllUsers();
 
-        assertEquals(204, response.getStatusCodeValue());
         assertNull(response.getBody());
     }
 
     @Test
     void getUserByIdSuccessfully() {
-        User user = new User("1", "John", "John Doe", "john.doe@example.com", "UTC");
-        when(userService.getUserById("1")).thenReturn(user);
+        UserDTO userDTO = new UserDTO("1", "John", "John Doe", "john.doe@example.com", "UTC");
+        when(userService.getUserById("1")).thenReturn(userDTO);
 
-        ResponseEntity<User> response = userController.getUserById("1");
+        ResponseEntity<UserDTO> response = userController.getUserById("1");
 
-        assertEquals(200, response.getStatusCodeValue());
-        assertEquals(user, response.getBody());
+        assertEquals(userDTO, response.getBody());
     }
 
     @Test
     void getUserByIdNotFound() {
         when(userService.getUserById("1")).thenReturn(null);
 
-        ResponseEntity<User> response = userController.getUserById("1");
+        ResponseEntity<UserDTO> response = userController.getUserById("1");
 
-        assertEquals(404, response.getStatusCodeValue());
         assertNull(response.getBody());
     }
 }

@@ -1,5 +1,6 @@
 package arsw.wherewe.back.mazorcausers.service;
 
+import arsw.wherewe.back.mazorcausers.dto.UserDTO;
 import arsw.wherewe.back.mazorcausers.model.User;
 import arsw.wherewe.back.mazorcausers.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,36 +23,66 @@ public class UserService {
         this.userRepository = userRepository;
     }
 
+
+    // Map User to UserDTO
+    private UserDTO toUserDTO(User user) {
+        return new UserDTO(
+                user.getId(),
+                user.getUserFirstName(),
+                user.getUserFullName(),
+                user.getUserEmail(),
+                user.getUserTimeZone()
+        );
+    }
+
+    // Map UserDTO to User
+    private User toUser(UserDTO userDTO) {
+        return new User(
+                userDTO.getId(),
+                userDTO.getUserFirstName(),
+                userDTO.getUserFullName(),
+                userDTO.getUserEmail(),
+                userDTO.getUserTimeZone()
+        );
+    }
+
     /**
      * Create a new user if it does not exist
-     * @param user
-     * @return User
+     * @param userDTO
+     * @return UserDTO
      */
-    public User createUserIfNotExists(User user) {
+    public UserDTO createUserIfNotExists(UserDTO userDTO) {
+        // Convert DTO to entity
+        User user = toUser(userDTO);
+
         // Verifica si el usuario ya existe
         Optional<User> existingUser = userRepository.findByUserEmail(user.getUserEmail());
         if (existingUser.isPresent()) {
-            return existingUser.get(); // Retorna el usuario si ya existe
+            return toUserDTO(existingUser.get()); // Retorna el usuario si ya existe
         }
 
         // Si no existe, guarda el nuevo usuario
-        return userRepository.save(user);
+        User savedUser = userRepository.save(user);
+        return toUserDTO(savedUser);
     }
 
     /**
      * Get all users
-     * @return List<User>
+     * @return List<UserDTO>
      */
-    public List<User> getAllUsers() {
-        return userRepository.findAll();
+    public List<UserDTO> getAllUsers() {
+        return userRepository.findAll().stream()
+                .map(this::toUserDTO)
+                .toList();
     }
 
     /**
      * Get User by Id
      * @param id String
-     * @return User or null
+     * @return UserDTO or null
      */
-    public User getUserById(String id) {
-        return userRepository.findById(id).orElse(null);
+    public UserDTO getUserById(String id) {
+        User user = userRepository.findById(id).orElse(null);
+        return user != null ? toUserDTO(user) : null;
     }
 }
