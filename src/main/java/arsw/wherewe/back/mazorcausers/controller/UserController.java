@@ -1,5 +1,6 @@
 package arsw.wherewe.back.mazorcausers.controller;
 
+import arsw.wherewe.back.mazorcausers.dto.UserDTO;
 import arsw.wherewe.back.mazorcausers.model.User;
 import arsw.wherewe.back.mazorcausers.service.UserService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -36,7 +37,7 @@ public class UserController {
 
     /**
      * Create a new user
-     * @param user User
+     * @param userDTO User
      * @return ResponseEntity<User>
      */
     @PostMapping("")
@@ -46,10 +47,9 @@ public class UserController {
                     content = @Content(schema = @Schema(implementation = User.class))),
             @ApiResponse(responseCode = "400", description = "Invalid user data provided")
     })
-    public ResponseEntity<User> createUser(@RequestBody User user) {
-
-        User newUser = userService.createUserIfNotExists(user);
-        if(newUser == null){
+    public ResponseEntity<UserDTO> createUser(@RequestBody UserDTO userDTO) {
+        UserDTO newUser = userService.createUserIfNotExists(userDTO);
+        if (newUser == null) {
             return ResponseEntity.badRequest().build();
         }
         return ResponseEntity.ok(newUser);
@@ -66,9 +66,9 @@ public class UserController {
                     content = @Content(schema = @Schema(implementation = User.class))),
             @ApiResponse(responseCode = "204", description = "No users found")
     })
-    public ResponseEntity<List<User>> getAllUsers() {
-        List<User> users = userService.getAllUsers();
-        if(users.isEmpty()){
+    public ResponseEntity<List<UserDTO>> getAllUsers() {
+        List<UserDTO> users = userService.getAllUsers();
+        if (users.isEmpty()) {
             return ResponseEntity.noContent().build();
         }
         return ResponseEntity.ok(users);
@@ -86,9 +86,9 @@ public class UserController {
                     content = @Content(schema = @Schema(implementation = User.class))),
             @ApiResponse(responseCode = "404", description = "User not found")
     })
-    public ResponseEntity<User> getUserById(@PathVariable("id") String id) {
-        User user = userService.getUserById(id);
-        if(user == null){
+    public ResponseEntity<UserDTO> getUserById(@PathVariable("id") String id) {
+        UserDTO user = userService.getUserById(id);
+        if (user == null) {
             return ResponseEntity.notFound().build();
         }
         return ResponseEntity.ok(user);
