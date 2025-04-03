@@ -1,5 +1,6 @@
 package arsw.wherewe.back.mazorcausers.service;
 
+import arsw.wherewe.back.mazorcausers.dto.UserDTO;
 import arsw.wherewe.back.mazorcausers.model.User;
 import arsw.wherewe.back.mazorcausers.repository.UserRepository;
 import org.junit.jupiter.api.BeforeEach;
@@ -34,11 +35,14 @@ class UserServiceTest {
         User user = new User();
         user.setUserEmail("test@example.com");
 
+        UserDTO userDTO = new UserDTO();
+        userDTO.setUserEmail("test@example.com");
+
         when(userRepository.findByUserEmail(user.getUserEmail())).thenReturn(Optional.of(user));
 
-        User result = userService.createUserIfNotExists(user);
+        UserDTO result = userService.createUserIfNotExists(userDTO);
 
-        assertEquals(user, result);
+        assertEquals(user.getUserEmail(), result.getUserEmail());
         verify(userRepository, never()).save(any(User.class));
     }
 
@@ -47,13 +51,16 @@ class UserServiceTest {
         User user = new User();
         user.setUserEmail("test@example.com");
 
+        UserDTO userDTO = new UserDTO();
+        userDTO.setUserEmail("test@example.com");
+
         when(userRepository.findByUserEmail(user.getUserEmail())).thenReturn(Optional.empty());
-        when(userRepository.save(user)).thenReturn(user);
+        when(userRepository.save(any(User.class))).thenReturn(user);
 
-        User result = userService.createUserIfNotExists(user);
+        UserDTO result = userService.createUserIfNotExists(userDTO);
 
-        assertEquals(user, result);
-        verify(userRepository).save(user);
+        assertEquals(user.getUserEmail(), result.getUserEmail());
+        verify(userRepository).save(any(User.class));
     }
 
     @Test
@@ -62,9 +69,9 @@ class UserServiceTest {
 
         when(userRepository.findAll()).thenReturn(users);
 
-        List<User> result = userService.getAllUsers();
+        List<UserDTO> result = userService.getAllUsers();
 
-        assertEquals(users, result);
+        assertEquals(users.size(), result.size());
     }
 
     @Test
@@ -73,16 +80,16 @@ class UserServiceTest {
         user.setId("1");
         when(userRepository.findById("1")).thenReturn(Optional.of(user));
 
-        User result = userService.getUserById("1");
+        UserDTO result = userService.getUserById("1");
 
-        assertEquals(user, result);
+        assertEquals(user.getId(), result.getId());
     }
 
     @Test
     void getUserById_userDoesNotExist() {
         when(userRepository.findById("1")).thenReturn(Optional.empty());
 
-        User result = userService.getUserById("1");
+        UserDTO result = userService.getUserById("1");
 
         assertNull(result);
     }
