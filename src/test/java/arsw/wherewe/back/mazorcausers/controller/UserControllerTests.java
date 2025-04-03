@@ -33,7 +33,7 @@ class UserControllerTests {
 
         ResponseEntity<User> response = userController.createUser(user);
 
-        assertEquals(200, response.getStatusCode().value());
+        assertEquals(200, response.getStatusCodeValue());
         assertEquals(user, response.getBody());
     }
 
@@ -44,7 +44,7 @@ class UserControllerTests {
 
         ResponseEntity<User> response = userController.createUser(user);
 
-        assertEquals(400, response.getStatusCode().value());
+        assertEquals(400, response.getStatusCodeValue());
         assertNull(response.getBody());
     }
 
@@ -57,7 +57,7 @@ class UserControllerTests {
 
         ResponseEntity<List<User>> response = userController.getAllUsers();
 
-        assertEquals(200, response.getStatusCode().value());
+        assertEquals(200, response.getStatusCodeValue());
         assertEquals(users, response.getBody());
     }
 
@@ -67,7 +67,7 @@ class UserControllerTests {
 
         ResponseEntity<List<User>> response = userController.getAllUsers();
 
-        assertEquals(204, response.getStatusCode().value());
+        assertEquals(204, response.getStatusCodeValue());
         assertNull(response.getBody());
     }
 
@@ -78,7 +78,7 @@ class UserControllerTests {
 
         ResponseEntity<User> response = userController.getUserById("1");
 
-        assertEquals(200, response.getStatusCode().value());
+        assertEquals(200, response.getStatusCodeValue());
         assertEquals(user, response.getBody());
     }
 
@@ -88,7 +88,7 @@ class UserControllerTests {
 
         ResponseEntity<User> response = userController.getUserById("1");
 
-        assertEquals(404, response.getStatusCode().value());
+        assertEquals(404, response.getStatusCodeValue());
         assertNull(response.getBody());
     }
 }
