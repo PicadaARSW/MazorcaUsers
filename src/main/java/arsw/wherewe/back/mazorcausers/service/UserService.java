@@ -31,7 +31,8 @@ public class UserService {
                 user.getUserFirstName(),
                 user.getUserFullName(),
                 user.getUserEmail(),
-                user.getUserTimeZone()
+                user.getUserTimeZone(),
+                user.getProfilePicture()
         );
     }
 
@@ -42,7 +43,8 @@ public class UserService {
                 userDTO.getUserFirstName(),
                 userDTO.getUserFullName(),
                 userDTO.getUserEmail(),
-                userDTO.getUserTimeZone()
+                userDTO.getUserTimeZone(),
+                userDTO.getProfilePicture()
         );
     }
 
@@ -84,5 +86,29 @@ public class UserService {
     public UserDTO getUserById(String id) {
         User user = userRepository.findById(id).orElse(null);
         return user != null ? toUserDTO(user) : null;
+    }
+
+    public UserDTO updateProfilePicture(String id, String profilePicture) {
+        User user = userRepository.findById(id).orElse(null);
+        if (user != null) {
+            user.setProfilePicture(profilePicture);
+            userRepository.save(user);
+            return toUserDTO(user);
+        }
+        return null;
+    }
+
+    /**
+     * Delete user by id
+     * @param id String
+     * @return boolean
+     */
+    public boolean deleteUser(String id) {
+        Optional<User> user = userRepository.findById(id);
+        if (user.isPresent()) {
+            userRepository.deleteById(id);
+            return true;
+        }
+        return false;
     }
 }

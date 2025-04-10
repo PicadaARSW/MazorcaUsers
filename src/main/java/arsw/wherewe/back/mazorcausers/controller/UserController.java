@@ -14,6 +14,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * User controller class for user operations
@@ -92,5 +93,43 @@ public class UserController {
             return ResponseEntity.notFound().build();
         }
         return ResponseEntity.ok(user);
+    }
+
+    @PutMapping("/{id}/profile-picture")
+    @Operation(summary = "Update user profile picture", description = "Updates the profile picture URL for a user")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Profile picture updated successfully",
+                    content = @Content(schema = @Schema(implementation = UserDTO.class))),
+            @ApiResponse(responseCode = "404", description = "User not found"),
+            @ApiResponse(responseCode = "400", description = "Invalid picture URL")
+    })
+    public ResponseEntity<UserDTO> updateProfilePicture(
+            @PathVariable("id") String id,
+            @RequestBody Map<String, String> requestBody) {
+        String pictureUrl = requestBody.get("pictureUrl");
+        if (pictureUrl == null || pictureUrl.isEmpty()) {
+            return ResponseEntity.badRequest().build();
+        }
+
+        UserDTO updatedUser = userService.updateProfilePicture(id, pictureUrl);
+        if (updatedUser == null) {
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.ok(updatedUser);
+    }
+
+    @DeleteMapping("/delete/{id}")
+    @Operation(summary = "Delete user account", description = "Deletes a user account by their ID")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "User account deleted successfully"),
+            @ApiResponse(responseCode = "404", description = "User not found")
+    })
+    public ResponseEntity<Void> deleteUser(@PathVariable("id") String id) {
+        boolean deleted = userService.deleteUser(id);
+        if (deleted) {
+            return ResponseEntity.ok().build();
+        } else {
+            return ResponseEntity.notFound().build();
+        }
     }
 }
