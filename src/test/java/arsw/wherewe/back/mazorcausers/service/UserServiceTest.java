@@ -93,4 +93,47 @@ class UserServiceTest {
 
         assertNull(result);
     }
+
+    @Test
+    void updateProfilePictureSuccessfully() {
+        User user = new User("1", "John", "John Doe", "john.doe@example.com", "UTC", null);
+        when(userRepository.findById("1")).thenReturn(Optional.of(user));
+
+        UserDTO result = userService.updateProfilePicture("1", "newProfilePictureUrl");
+
+        assertEquals("newProfilePictureUrl", result.getProfilePicture());
+        verify(userRepository).save(user);
+    }
+
+    @Test
+    void updateProfilePictureUserNotFound() {
+        when(userRepository.findById("1")).thenReturn(Optional.empty());
+
+        UserDTO result = userService.updateProfilePicture("1", "newProfilePictureUrl");
+
+        assertNull(result);
+        verify(userRepository, never()).save(any(User.class));
+    }
+
+    @Test
+    void deleteUserSuccessfully() {
+        User user = new User();
+        user.setId("1");
+        when(userRepository.findById("1")).thenReturn(Optional.of(user));
+
+        boolean result = userService.deleteUser("1");
+
+        assertEquals(true, result);
+        verify(userRepository).deleteById("1");
+    }
+
+    @Test
+    void deleteUserNotFound() {
+        when(userRepository.findById("1")).thenReturn(Optional.empty());
+
+        boolean result = userService.deleteUser("1");
+
+        assertEquals(false, result);
+        verify(userRepository, never()).deleteById(anyString());
+    }
 }
