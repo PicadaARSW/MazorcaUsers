@@ -32,3 +32,7 @@ build/
 
 ### VS Code ###
 .vscode/
+.env
+.idea/
+### Ignorar archivos específicos de configuración ###
+src/main/java/arsw/wherewe/back/mazorcausers/config/DotEnvConfig.java
