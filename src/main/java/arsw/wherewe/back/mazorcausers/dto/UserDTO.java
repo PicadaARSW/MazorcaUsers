@@ -20,16 +20,20 @@ public class UserDTO {
     @Schema(description = "User's time zone", example = "America/New_York")
     private String userTimeZone;
 
+    @Schema(description = "URL of user's profile picture", example = "https://example.com/profile1.jpg")
+    private String profilePicture;
+
     // Constructors
     public UserDTO() {
     }
 
-    public UserDTO(String id, String userFirstName, String userFullName, String userEmail, String userTimeZone) {
+    public UserDTO(String id, String userFirstName, String userFullName, String userEmail, String userTimeZone, String profilePicture) {
         this.id = id;
         this.userFirstName = userFirstName;
         this.userFullName = userFullName;
         this.userEmail = userEmail;
         this.userTimeZone = userTimeZone;
+        this.profilePicture = profilePicture;
     }
 
     // Getters and Setters
@@ -73,6 +77,14 @@ public class UserDTO {
         this.userTimeZone = userTimeZone;
     }
 
+    public String getProfilePicture() {
+        return profilePicture;
+    }
+
+    public void setProfilePicture(String profilePicture) {
+        this.profilePicture = profilePicture;
+    }
+
     @Override
     public String toString() {
         return "UserDTO{" +
@@ -81,6 +93,7 @@ public class UserDTO {
                 ", userFullName='" + userFullName + '\'' +
                 ", userEmail='" + userEmail + '\'' +
                 ", userTimeZone='" + userTimeZone + '\'' +
+                ", profilePicture='" + profilePicture + '\'' +
                 '}';
     }
 }

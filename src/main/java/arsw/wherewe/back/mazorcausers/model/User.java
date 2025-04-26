@@ -22,6 +22,8 @@ public class User {
     private String userEmail;
     @Schema(description = "User's time zone", example = "America/New_York")
     private String userTimeZone;
+    @Schema(description = "URL of user's profile picture", example = "https://example.com/profile1.jpg")
+    private String profilePicture;
 
     /**
      * Constructor for User
@@ -31,12 +33,13 @@ public class User {
      * @param email
      * @param timeZone
      */
-    public User(String id, String firstName, String fullName, String email, String timeZone) {
+    public User(String id, String firstName, String fullName, String email, String timeZone, String profilePicture) {
         this.id = id;
         this.userFirstName = firstName;
         this.userFullName = fullName;
         this.userEmail = email;
         this.userTimeZone = timeZone;
+        this.profilePicture = profilePicture;
     }
 
     /**
@@ -127,6 +130,22 @@ public class User {
     }
 
     /**
+     * Get the user profile picture
+     * @return profilePicture
+     */
+    public String getProfilePicture() {
+        return profilePicture;
+    }
+
+    /**
+     * Set the user profile picture
+     * @param profilePicture
+     */
+    public void setProfilePicture(String profilePicture) {
+        this.profilePicture = profilePicture;
+    }
+
+    /**
      * Override the toString method
      * @return String
      */
@@ -138,6 +157,7 @@ public class User {
                 ", userFullName='" + userFullName + '\'' +
                 ", userEmail='" + userEmail + '\'' +
                 ", userTimeZone='" + userTimeZone + '\'' +
+                ", profilePicture='" + profilePicture + '\'' +
                 '}';
     }
 
